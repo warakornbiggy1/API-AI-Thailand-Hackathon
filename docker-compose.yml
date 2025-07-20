@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api1:
+    build: ./api1
+    ports:
+      - "8000:8000"
+    environment:
+      API2_URL: http://api2:8001/api2/hello # Use the service name and internal port for API2
+    depends_on:
+      - api2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  api2:
+    build: ./api2
+    ports:
+      - "8001:8001"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
